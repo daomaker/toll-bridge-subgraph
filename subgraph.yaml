@@ -1,0 +1,41 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DycoFactory
+    network: ropsten
+    source:
+      address: "0x8E9F08a94b9FF94E3bDE5Ea031907b7A68d6F1A7"
+      abi: DycoFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - DycoCreated
+        - DycoExited
+        - DycoPaused
+        - DycoResumed
+        - OwnershipTransferred
+        - TokensClaimed
+        - WhitelistedUsersAdded
+      abis:
+        - name: DycoFactory
+          file: ./abis/DycoFactory.json
+      eventHandlers:
+        - event: DycoCreated(address,address,address,uint256,uint256[],uint256[],bool)
+          handler: handleDycoCreated
+        - event: DycoExited(address,address)
+          handler: handleDycoExited
+        - event: DycoPaused(address)
+          handler: handleDycoPaused
+        - event: DycoResumed(address)
+          handler: handleDycoResumed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TokensClaimed(address,address,uint256,uint256)
+          handler: handleTokensClaimed
+        - event: WhitelistedUsersAdded(address,address[],uint256[])
+          handler: handleWhitelistedUsersAdded
+      file: ./src/mapping.ts
