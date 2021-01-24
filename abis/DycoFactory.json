@@ -49,6 +49,12 @@
       {
         "indexed": false,
         "internalType": "bool",
+        "name": "initialDistributionEnabled",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
         "name": "isBurnableToken",
         "type": "bool"
       }

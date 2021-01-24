@@ -1,6 +1,46 @@
-type ExampleEntity @entity {
+type Dyco @entity {
   id: ID!
-  count: BigInt!
-  dyco: Bytes! # address
-  operator: Bytes! # address
+  address: String!
+  token: String!
+  operator: Operator!
+  investors: [Investor!]
+  tollFee: BigInt!
+  distributionDelays: [BigInt!]!
+  distributionPercents: [BigInt!]!
+  start: BigInt!
+  finish: BigInt!
+  isTokenBurnable: Boolean!
+  isPaused: Boolean!
+  isExited: Boolean!
+  initialDistributionEnabled: Boolean!
+  transactionHash: String!
+}
+
+type Operator @entity {
+  id: ID!
+  address: String!
+  dycos: [Dyco!]!
+}
+
+type Investor @entity {
+  id: ID!
+  address: String!
+  dycos: [DycoState!]!
+}
+
+type DycoState @entity {
+  id: ID!
+  dyco: Dyco!
+  maxTokens: BigDecimal!
+  distributedTokens: BigDecimal!
+  lastActivity: BigInt!
+  claims: [Claim!]
+}
+
+type Claim @entity {
+  id: ID!
+  claimedTokens: BigDecimal!
+  burnedTokens: BigDecimal!
+  timestamp: BigInt!
+  transactionHash: String!
 }
