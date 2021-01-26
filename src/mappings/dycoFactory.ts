@@ -32,12 +32,20 @@ export function handleDycoCreated(event: DycoCreated): void {
 
   let totalDelay = Utils.ZERO_INT
   let delays = event.params.distributionDelays
+  let releasesTimestamps = new Array<BigInt>(delays.length)
   for (let i = 0; i < delays.length; i++) {
     totalDelay = totalDelay.plus(delays[i])
+
+    if (i == 0) {
+      releasesTimestamps[i] = event.block.timestamp.plus(delays[i])
+    } else {
+      releasesTimestamps[i] = releasesTimestamps[i - 1].plus(delays[i])
+    }
   }
 
   entity.distributionDelays = delays
   entity.distributionPercents = event.params.distributionPercents
+  entity.releasesTimestamps = releasesTimestamps
   entity.start = event.block.timestamp
   entity.finish = event.block.timestamp.plus(totalDelay)
   entity.isTokenBurnable = event.params.isBurnableToken
