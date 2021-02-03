@@ -48,6 +48,9 @@ export function handleDycoCreated(event: DycoCreated): void {
   entity.releasesTimestamps = releasesTimestamps
   entity.start = event.block.timestamp
   entity.finish = event.block.timestamp.plus(totalDelay)
+  entity.transferredTokens = Utils.ZERO_DEC
+  entity.burnedTokens = Utils.ZERO_DEC
+  entity.totalTokens = Utils.ZERO_DEC
   entity.isTokenBurnable = event.params.isBurnableToken
   entity.isPaused = false
   entity.isExited = false
@@ -114,6 +117,10 @@ export function handleWhitelistedUsersAdded(event: WhitelistedUsersAdded): void 
       let claims = dycoStateEntity.claims
       claims.push(claimedEntity.id)
       dycoStateEntity.claims = claims
+
+      // Update DYCO total and distributed tokens amount
+      entity.totalTokens = entity.totalTokens.plus(Utils.normalize(amounts[i], decimals))
+      entity.transferredTokens = entity.transferredTokens.plus(claimedTokensAmount)
     }
 
     dycoStateEntity.save()
@@ -174,6 +181,11 @@ export function handleTokensClaimed(event: TokensClaimed): void {
   claims.push(claimedEntity.id)
   dycoStateEntity.claims = claims
 
+  // Increase global transferred/burned tokens amount
+  entity.transferredTokens = entity.transferredTokens.plus(receivedTokens)
+  entity.burnedTokens = entity.burnedTokens.plus(burnedTokens)
+
   // Save dyco state
   dycoStateEntity.save()
+  entity.save()
 }

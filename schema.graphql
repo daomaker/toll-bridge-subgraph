@@ -10,6 +10,9 @@ type Dyco @entity {
   releasesTimestamps: [BigInt!]!
   start: BigInt!
   finish: BigInt!
+  totalTokens: BigDecimal!
+  transferredTokens: BigDecimal!
+  burnedTokens: BigDecimal!
   isTokenBurnable: Boolean!
   isPaused: Boolean!
   isExited: Boolean!
