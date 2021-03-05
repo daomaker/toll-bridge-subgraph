@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: DycoFactory
-    network: rinkeby
+    network: kovan
     source:
-      address: "0x7f27D743c51aDC9b44CCBa745CCF25EE451721b2"
+      address: "0x447f6D271396553C8E06E3637ABf4B7649500471"
       abi: DycoFactory
-      startBlock: 7996445
+      startBlock: 23756633
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -39,7 +39,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: DycoToken
-    network: rinkeby
+    network: kovan
     source:
       abi: DycoToken
     mapping:

@@ -118,10 +118,12 @@ export function handleWhitelistedUsersAdded(event: WhitelistedUsersAdded): void 
       claims.push(claimedEntity.id)
       dycoStateEntity.claims = claims
 
-      // Update DYCO total and distributed tokens amount
-      entity.totalTokens = entity.totalTokens.plus(Utils.normalize(amounts[i], decimals))
+    // Update DYCO total transferred amount
       entity.transferredTokens = entity.transferredTokens.plus(claimedTokensAmount)
     }
+
+    // Update DYCO total tokens amount
+    entity.totalTokens = entity.totalTokens.plus(Utils.normalize(amounts[i], decimals))
 
     dycoStateEntity.save()
 
